@@ -1,0 +1,44 @@
+f = open("C:\\Users\\chern\\OneDrive\\Рабочий стол\\26-11.txt")
+n, l, m = map(int,f.readline().split())
+aa = [0]*l
+bb = [0]*m
+time = [[0]*3 for _ in range(n)]
+for i in range(n):
+    s = f.readline().split()
+    time[i][0] = int(s[0])
+    time[i][1] = int(s[1])
+    time[i][2] = s[2]
+time = sorted(time, key = lambda x: x[0])
+for _ in range(n):
+    time[_][1] += time[_][0]
+time = sorted(time, key = lambda x: x[1])
+mi = 0
+ot = 0
+for i in range(n):
+    if time[i][2] == "B":
+        f = 0
+        for j in range(m):
+            if bb[j] == 0 or bb[j]<=time[i][0]:
+                mi+=1
+                bb[j] = time[i][1]
+                f = 1
+                break
+        if f == 0:
+            ot+=1
+    if time[i][2] == "A":
+        f = 0
+        for j in range(l):
+             if aa[j] == 0 or aa[j]<=time[i][0]:
+                 aa[j] = time[i][1]
+                 f = 1
+                 break
+             if j<m:
+                 if bb[j] == 0 or bb[j] <= time[i][0]:
+                     bb[j] = time[i][1]
+                     f = 1
+                     break
+
+
+        if f == 0:
+            ot+=1
+print(mi,ot)
